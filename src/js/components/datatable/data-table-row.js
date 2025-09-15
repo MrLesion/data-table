@@ -1,4 +1,4 @@
-﻿import CustomElementBase from '../custom-element-base.js';
+﻿import {CustomElementBase} from '../custom-element-base.js';
 import './data-table-row-actions.js';
 import TableConfig from './data-table-config.js';
 
@@ -18,7 +18,6 @@ export class DataTableRow extends CustomElementBase {
     constructor() {
         super();
         this.isOpen = false;
-        this.state = '';
         this.action = '';
         this.method = '';
     }
@@ -84,12 +83,12 @@ export class DataTableRow extends CustomElementBase {
             },
             [TableConfig.methods.modal]: () => {
                 this.triggerCustomEvent(
-                    this.isOpen ? TableConfig.events.hideModal : TableConfig.events.showModal
+                    !this.isOpen ? TableConfig.events.hideModal : TableConfig.events.showModal
                 );
             },
             [TableConfig.methods.offcanvas]: () => {
                 this.triggerCustomEvent(
-                    this.isOpen ? TableConfig.events.hideOffcanvas : TableConfig.events.showOffcanvas
+                    !this.isOpen ? TableConfig.events.hideOffcanvas : TableConfig.events.showOffcanvas
                 );
             }
         };

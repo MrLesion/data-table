@@ -1,4 +1,4 @@
-﻿import CustomElementBase from '../custom-element-base.js';
+﻿import {CustomElementBase} from '../custom-element-base.js';
 import TableConfig from './data-table-config.js';
 import {matchesBreakpoint} from "./data-table-utillities.js";
 import './data-table-row.js';
@@ -51,14 +51,7 @@ export class DataTable extends CustomElementBase {
         window.addEventListener('resize', this.updateResponsiveMode.bind(this));
 
         //SSR
-        this.update(
-            `${TableConfig.endpoints.list}`).then((data) => {
-            const tableBody = this.querySelector('.js-data-table-body');
-            data.items.forEach(row => {
-                const rowNode = this.domParser.parseFromString(row.html, 'text/html').body.firstElementChild;
-                tableBody.append(rowNode);
-            });
-        });
+        this.updateList();
     }
 
     disconnectedCallback() {
@@ -71,10 +64,8 @@ export class DataTable extends CustomElementBase {
             console.log('TODO: triggers API update or local filtering. // query');
             this.update(TableConfig.endpoints.search, TableConfig.templates.table);
         },
-        [TableConfig.events.filterChange]: (objEvent) => {
-            console.log('DataTable: filterChange event handler called with', objEvent);
-            console.log('TODO: updates rows (API call or local filter). // filters');
-            this.update();
+        [TableConfig.events.filterChange]: () => {
+            this.updateList();
         },
         [TableConfig.events.sortChange]: (objEvent) => {
             this.form.querySelector('[name="sortBy"]').value = objEvent.detail.sortBy;
@@ -118,6 +109,18 @@ export class DataTable extends CustomElementBase {
         } finally {
             this.classList.remove(TableConfig.modifiers.isLoading);
         }
+    }
+    
+    async updateList(){
+        this.update(
+            `${TableConfig.endpoints.list}`).then((data) => {
+            const tableBody = this.querySelector('.js-data-table-body');
+            tableBody.innerHTML = '';
+            data.items.forEach(row => {
+                const rowNode = this.domParser.parseFromString(row.html, 'text/html').body.firstElementChild;
+                tableBody.append(rowNode);
+            });
+        });
     }
 
     updateResponsiveMode() {

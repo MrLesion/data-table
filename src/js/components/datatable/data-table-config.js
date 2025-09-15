@@ -1,5 +1,5 @@
 ﻿const TableConfig = {
-    events:{
+    events: {
         update: 'data-table:update',
         updated: 'data-table:updated',
         updateError: 'data-table:update:error',
@@ -22,9 +22,9 @@
         hideCollapse: 'data-table:hide-collapse',
     },
     endpoints: {
-        list: 'https://my-json-server.typicode.com/MrLesion/demo/list',
-        details: 'https://my-json-server.typicode.com/MrLesion/demo/details',
-        edit: 'https://my-json-server.typicode.com/MrLesion/demo/edit',
+        list: 'https://my-json-server.typicode.com/MrLesion/data-table/list',
+        details: 'https://my-json-server.typicode.com/MrLesion/data-table/details',
+        edit: 'https://my-json-server.typicode.com/MrLesion/data-table/edit',
     },
     templates: {
         tableRowDetails: '/template/path/to/table-row-details.cshtml',
