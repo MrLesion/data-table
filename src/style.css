@@ -1,0 +1,18 @@
+﻿@media (max-width: 767.98px) {
+    [data-label]::before {
+        content: attr(data-label);
+        font-weight: 600;
+        display: inline-block;
+        min-width: 100px;
+    }
+}
+
+data-table-row-detail{
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
