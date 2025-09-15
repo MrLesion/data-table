@@ -18,6 +18,8 @@
         hideModal: 'data-table:hide-modal',
         showOffcanvas: 'data-table:show-offcanvas',
         hideOffcanvas: 'data-table:hide-offcanvas',
+        showCollapse: 'data-table:show-collapse',
+        hideCollapse: 'data-table:hide-collapse',
     },
     endpoints: {
         list: 'https://my-json-server.typicode.com/MrLesion/demo/list',

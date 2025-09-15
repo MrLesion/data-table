@@ -19,6 +19,8 @@ export class DataTableRow extends CustomElementBase {
         super();
         this.isOpen = false;
         this.state = '';
+        this.action = '';
+        this.method = '';
     }
 
     connectedCallback() {
@@ -56,14 +58,43 @@ export class DataTableRow extends CustomElementBase {
         const rowId = objEvent.detail.rowId;
         const config = this.dataTable?.getConfiguration();
         const method = config[strMethod];
-        
-        if ((method === TableConfig.methods.modal || method === TableConfig.methods.offcanvas) && this.isOpen) {
-            this.isOpen = false;
-            this.state = '';
-        }
+        const prevAction = this.action;
+        const prevMethod = this.method;
 
-        if (this.state !== action) {
-            this.state = action;
+        this.action = action;
+        this.method = method;
+
+        const showHandlers = {
+            [TableConfig.methods.inline]: (data) => {
+                this.triggerCustomEvent(TableConfig.events.showCollapse, { rowId, data });
+            },
+            [TableConfig.methods.modal]: (data) => {
+                this.triggerCustomEvent(TableConfig.events.showModal, { rowId, data });
+            },
+            [TableConfig.methods.offcanvas]: (data) => {
+                this.triggerCustomEvent(TableConfig.events.showOffcanvas, { rowId, data });
+            }
+        };
+
+        const toggleHandlers = {
+            [TableConfig.methods.inline]: () => {
+                this.triggerCustomEvent(
+                    !this.isOpen ? TableConfig.events.showCollapse : TableConfig.events.hideCollapse, {rowId}
+                );
+            },
+            [TableConfig.methods.modal]: () => {
+                this.triggerCustomEvent(
+                    this.isOpen ? TableConfig.events.hideModal : TableConfig.events.showModal
+                );
+            },
+            [TableConfig.methods.offcanvas]: () => {
+                this.triggerCustomEvent(
+                    this.isOpen ? TableConfig.events.hideOffcanvas : TableConfig.events.showOffcanvas
+                );
+            }
+        };
+        
+        if (prevAction !== action || prevMethod !== method) {
             this.classList.add(TableConfig.modifiers.isLoading);
 
             try {
@@ -72,37 +103,18 @@ export class DataTableRow extends CustomElementBase {
                     template
                 );
 
-                if (method === TableConfig.methods.inline && this.rowDetail) {
-                    this.rowDetail.innerHTML = data.html;
-                    this.bsCollapse?.show();
-                } else if (method === TableConfig.methods.modal) {
-                    this.triggerCustomEvent(TableConfig.events.showModal, { data });
-                } else if (method === TableConfig.methods.offcanvas) {
-                    this.triggerCustomEvent(TableConfig.events.showOffcanvas, { data });
-                }
+                showHandlers[method]?.(data);
+                this.isOpen = true;
             } catch (err) {
                 console.error('DataTableRow handleAction error:', err);
             } finally {
                 this.classList.remove(TableConfig.modifiers.isLoading);
             }
 
-            this.isOpen = true;
             return;
         }
-
-        // Toggle existing state
-        if (method === TableConfig.methods.inline) {
-            this.isOpen ? this.bsCollapse?.hide() : this.bsCollapse?.show();
-        } else if (method === TableConfig.methods.modal) {
-            this.triggerCustomEvent(
-                this.isOpen ? TableConfig.events.hideModal : TableConfig.events.showModal
-            );
-        } else if (method === TableConfig.methods.offcanvas) {
-            this.triggerCustomEvent(
-                this.isOpen ? TableConfig.events.hideOffcanvas : TableConfig.events.showOffcanvas
-            );
-        }
-
+        
+        toggleHandlers[method]?.();
         this.isOpen = !this.isOpen;
     }
 }
