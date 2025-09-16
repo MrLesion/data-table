@@ -23,7 +23,8 @@
         hideCollapse: 'data-table:hide-collapse',
     },
     endpoints: {
-        list: 'https://my-json-server.typicode.com/MrLesion/data-table/list',
+        list: 'https://my-json-server.typicode.com/MrLesion/data-table/items',
+        _list: 'https://my-json-server.typicode.com/MrLesion/data-table/list',
         details: 'https://my-json-server.typicode.com/MrLesion/data-table/details',
         edit: 'https://my-json-server.typicode.com/MrLesion/data-table/edit',
     },
@@ -45,6 +46,11 @@
         dataTableEmpty: 'data-table-empty',
         dataTableLoader: 'data-table-loader',
         dataTableActions: 'data-table-actions',
+    },
+    inputs: {
+        pageNum: 'input[name="_page"]',
+        sortBy: 'input[name="_sort"]',
+        sortOrder: 'input[name="_order"]',
     },
     modifiers: {},
     methods: {

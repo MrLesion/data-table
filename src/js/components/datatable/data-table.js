@@ -66,9 +66,9 @@ export class DataTable extends CustomElementBase {
             this.updateList();
         },
         [TableConfig.events.sortChange]: (objEvent) => {
-            this.form.querySelector('[name="sortBy"]').value = objEvent.detail.sortBy;
-            this.form.querySelector('[name="sortOrder"]').value = objEvent.detail.sortOrder;
-            this.update(TableConfig.endpoints.list);
+            this.form.querySelector(TableConfig.inputs.sortBy).value = objEvent.detail.sortBy;
+            this.form.querySelector(TableConfig.inputs.sortOrder).value = objEvent.detail.sortOrder;
+            this.updateList();
         },
         [TableConfig.events.rowSelect]: (objEvent) => {
             console.log('DataTable: rowSelect event handler called with', objEvent);
@@ -76,9 +76,9 @@ export class DataTable extends CustomElementBase {
             this.update();
         },
         [TableConfig.events.pageChange]: (objEvent) => {
-            console.log('DataTable: pageChange event handler called with', objEvent);
-            console.log('TODO: reloads content for that page. // page, pageSize');
-            this.update();
+            console.log(objEvent);
+            this.form.querySelector(TableConfig.inputs.pageNum).value = objEvent.detail.pageNum;
+            this.updateList();
         }
     }
 
@@ -111,15 +111,26 @@ export class DataTable extends CustomElementBase {
     }
     
     async updateList(){
+        const urlParams = new URLSearchParams(new FormData(this.form));
+        const response = await fetch(`${TableConfig.endpoints._list}?${urlParams.toString()}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-core-template': '',
+            }
+        });
+        const listJson = await response.json();
+        
         this.update(
             `${TableConfig.endpoints.list}`).then((data) => {
+            listJson.items = data;
             const tableBody = this.querySelector('.js-data-table-body');
             tableBody.innerHTML = '';
-            data.items.forEach(row => {
+            listJson.items.forEach(row => {
                 const rowNode = this.domParser.parseFromString(row.html, 'text/html').body.firstElementChild;
                 tableBody.append(rowNode);
             });
-            this.triggerCustomEvent(TableConfig.events.listUpdated, {data});
+            this.triggerCustomEvent(TableConfig.events.listUpdated, {data: listJson});
         });
     }
     

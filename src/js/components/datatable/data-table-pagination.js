@@ -25,7 +25,7 @@ export class DataTablePagination extends CustomElementBase {
     connectedCallback() {
         this.currentPage = Number(this.getAttribute(DataTablePagination.attributes.currentPage)) ?? 1;
         this.totalPages = Number(this.getAttribute(DataTablePagination.attributes.totalPages)) ?? 1;
-        this.totalPages = Number(this.getAttribute(DataTablePagination.attributes.pageSize)) ?? 10;
+        this.pageSize = Number(this.getAttribute(DataTablePagination.attributes.pageSize)) ?? 2;
         this.dataTable = this.closest(TableConfig.selectors.dataTable);
         this.dataTable.addEventListener(TableConfig.events.listUpdated, this);
         
@@ -40,7 +40,7 @@ export class DataTablePagination extends CustomElementBase {
         },
         [DataTablePagination.events.click]: (event) =>{
             event.preventDefault();
-            const page = this.querySelector('.page-item.active').dataset.page;
+            const page = event.target.dataset.page;
             let pageNum = Number(page);
             if(isNaN(pageNum)){
                 if(page === 'prev'){
@@ -54,20 +54,19 @@ export class DataTablePagination extends CustomElementBase {
     }
 
     update(data) {
-        console.log(data);
         this.innerHTML = data?.paginationHtml ?? '';
     }
 
-    changePage(page){
-        if (page < 1) {
-            page = 1;
+    changePage(pageNum){
+        if (pageNum < 1) {
+            pageNum = 1;
         }
-        if (page > this.totalPages) {
-            page = this.totalPages;
+        if (pageNum > this.totalPages) {
+            pageNum = this.totalPages;
         }
-        this.currentPage = page;
-        this.setAttribute(DataTablePagination.attributes.currentPage, page);
-        this.triggerCustomEvent(TableConfig.events.pageChange, { page });
+        this.currentPage = pageNum;
+        this.setAttribute(DataTablePagination.attributes.currentPage, pageNum);
+        this.triggerCustomEvent(TableConfig.events.pageChange, { pageNum });
     }
 }
 
