@@ -1,8 +1,13 @@
 ﻿import {CustomElementBase} from '../custom-element-base.js';
 import TableConfig from './data-table-config.js';
+import {Events} from "../events.js";
 
 export class DataTableHeader extends CustomElementBase {
     static tagName = 'data-table-header';
+    
+    static selectors = {
+        sortHeader: '.js-data-table-header-sort'
+    }
 
     static events = {
         change: 'change',
@@ -10,8 +15,7 @@ export class DataTableHeader extends CustomElementBase {
     }
 
     static observedEvents = [
-        DataTableHeader.events.change,
-        DataTableHeader.events.click,
+        DataTableHeader.events.change
     ]
     constructor() {
         super();
@@ -19,23 +23,15 @@ export class DataTableHeader extends CustomElementBase {
     
     connectedCallback() {
         this.dataTable = this.closest(TableConfig.selectors.dataTable);
+
+        Events.on(DataTableHeader.events.click, DataTableHeader.selectors.sortHeader, (event) =>{
+            this.setSort(event.target);
+        });
     }
 
     eventHandlers = {
-        [DataTableHeader.events.change]: (event) => {
-            const rows = this.dataTable.querySelectorAll(TableConfig.selectors.dataTableRow);
+        [DataTableHeader.events.change]: (event) => {const rows = this.dataTable.querySelectorAll(TableConfig.selectors.dataTableRow);
             rows.forEach(row => row.querySelector(TableConfig.selectors.dataTableRowSelect).checked = event.target.checked);
-        },
-        [DataTableHeader.events.click]: (event) =>{
-            let domElement = event.target;
-            
-            while (domElement && domElement !== event.currentTarget) {
-                if (domElement.dataset && domElement.dataset.sortBy) {
-                   this.setSort(domElement);
-                    break;
-                }
-                domElement = domElement.parentElement;
-            }
         }
     }
     setSort(domElement){

@@ -33,6 +33,7 @@
     "totalItems": 3,
     "sortBy": "product",
     "sortOrder": "desc",
+    "paginationHtml": "<nav aria-label=\"Table pagination\">\n  <ul class=\"pagination pagination-sm mb-0\">\n    <li class=\"page-item disabled\"><span class=\"page-link\">Previous</span></li>\n    <li class=\"page-item active\"><span class=\"page-link\">1</span></li>\n    <li class=\"page-item\"><a class=\"page-link\" href=\"#\">2</a></li>\n    <li class=\"page-item\"><a class=\"page-link\" href=\"#\">3</a></li>\n    <li class=\"page-item\"><a class=\"page-link\" href=\"#\">Next</a></li>\n  </ul>\n</nav>",,
     "items": [
       {
         "id": 1,

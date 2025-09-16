@@ -2,6 +2,7 @@
     events: {
         update: 'data-table:update',
         updated: 'data-table:updated',
+        listUpdated: 'data-table:list:updated',
         updateError: 'data-table:update:error',
         empty: 'data-table:empty',
         filterChange: 'data-table:filter-change',
@@ -45,9 +46,7 @@
         dataTableLoader: 'data-table-loader',
         dataTableActions: 'data-table-actions',
     },
-    modifiers: {
-        isLoading: 'is-loading',
-    },
+    modifiers: {},
     methods: {
         inline: 'inline',
         modal: 'modal',

@@ -44,9 +44,7 @@ export class DataTable extends CustomElementBase {
     }
 
     connectedCallback() {
-        this.classList.add(TableConfig.modifiers.isLoading);
         this.form = this.querySelector('.js-data-table-form');
-
         this.updateResponsiveMode();
         window.addEventListener('resize', this.updateResponsiveMode.bind(this));
 
@@ -85,6 +83,7 @@ export class DataTable extends CustomElementBase {
     }
 
     async update(strEndpoint, strTemplate = null, data = {}) {
+        this.setAttribute('loading', 'true');
         if (!strEndpoint) {
             throw new Error('DataTable: update failed. Endpoint is required.');
         }
@@ -107,7 +106,7 @@ export class DataTable extends CustomElementBase {
             console.error('DataTable update failed:', err);
             this.triggerCustomEvent(TableConfig.events.updateError, {error: err});
         } finally {
-            this.classList.remove(TableConfig.modifiers.isLoading);
+            this.setAttribute('loading', 'false');
         }
     }
     
@@ -120,8 +119,10 @@ export class DataTable extends CustomElementBase {
                 const rowNode = this.domParser.parseFromString(row.html, 'text/html').body.firstElementChild;
                 tableBody.append(rowNode);
             });
+            this.triggerCustomEvent(TableConfig.events.listUpdated, {data});
         });
     }
+    
 
     updateResponsiveMode() {
         Object.keys(DataTable.attributes).forEach((attrKey) => {
