@@ -33,7 +33,7 @@
     "totalItems": 3,
     "sortBy": "product",
     "sortOrder": "desc",
-    "paginationHtml": "<nav class=\"d-flex justify-content-center\" aria-label=\"Table pagination\">\n  <ul class=\"pagination pagination-sm mb-0\">\n    <li class=\"page-item disabled\"><span class=\"page-link\">Previous</span></li>\n    <li class=\"page-item active\"><span class=\"page-link\">1</span></li>\n    <li class=\"page-item\"><a class=\"page-link\" href=\"#\">2</a></li>\n    <li class=\"page-item\"><a class=\"page-link\" href=\"#\">3</a></li>\n    <li class=\"page-item\"><a class=\"page-link\" href=\"#\">Next</a></li>\n  </ul>\n</nav>",
+    "paginationHtml": "<nav aria-label=\"Table pagination\" class=\"d-flex justify-content-center\">\n  <ul class=\"pagination pagination-sm mb-0\">\n    <li class=\"page-item disabled\" data-page=\"prev\">\n      <span class=\"page-link\">Previous</span>\n    </li>\n    <li class=\"page-item active\">\n      <span class=\"page-link\" data-page=\"1\">1</span>\n    </li>\n    <li class=\"page-item\">\n      <a class=\"page-link\" href=\"#\" data-page=\"2\">2</a>\n    </li>\n    <li class=\"page-item\">\n      <a class=\"page-link\" href=\"#\" data-page=\"3\">3</a>\n    </li>\n    <li class=\"page-item\">\n      <a class=\"page-link\" href=\"#\" data-page=\"next\">Next</a>\n    </li>\n  </ul>\n</nav>",
     "items": [
       {
         "id": 1,
