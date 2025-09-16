@@ -1,0 +1,17 @@
+{
+  "edit": [
+    {
+      "id": 1,
+      "html": "<div class=\"card border-0 rounded-0 border-top\">\n  <div class=\"card-body\">\n    <div class=\"mb-2\">\n      <label class=\"form-label\"><strong>Price:</strong></label>\n      <input type=\"text\" class=\"form-control\" value=\"$499\">\n    </div>\n    <div>\n      <label class=\"form-label\"><strong>Stock:</strong></label>\n      <input type=\"text\" class=\"form-control\" value=\"12 pcs\">\n    </div>\n  </div>\n</div>"
+    },
+    {
+      "id": 2,
+      "html": "<div class=\"card border-0 rounded-0 border-top\">\n  <div class=\"card-body\">\n    <div class=\"mb-2\">\n      <label class=\"form-label\"><strong>Price:</strong></label>\n      <input type=\"text\" class=\"form-control\" value=\"$100\">\n    </div>\n    <div>\n      <label class=\"form-label\"><strong>Stock:</strong></label>\n      <input type=\"text\" class=\"form-control\" value=\"1 pcs\">\n    </div>\n  </div>\n</div>"
+    },
+    {
+      "id": 3,
+      "html": "<div class=\"card border-0 rounded-0 border-top\">\n  <div class=\"card-body\">\n    <div class=\"mb-2\">\n      <label class=\"form-label\"><strong>Price:</strong></label>\n      <input type=\"text\" class=\"form-control\" value=\"$299\">\n    </div>\n    <div>\n      <label class=\"form-label\"><strong>Stock:</strong></label>\n      <input type=\"text\" class=\"form-control\" value=\"6 pcs\">\n    </div>\n  </div>\n</div>"
+    }
+
+  ]
+}

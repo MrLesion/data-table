@@ -1,0 +1,16 @@
+{
+  "details": [
+    {
+      "id": 1,
+      "html": "<div class=\"card border-0 rounded-0 border-top\">\n  <div class=\"card-body\">\n    <p><strong>Price:</strong> $499</p>\n    <p><strong>Stock:</strong> 12 pcs</p>\n  </div>\n</div>"
+    },
+    {
+      "id": 2,
+      "html": "<div class=\"card border-0 rounded-0 border-top\">\n  <div class=\"card-body\">\n    <p><strong>Price:</strong> $100</p>\n    <p><strong>Stock:</strong> 1 pcs</p>\n  </div>\n</div>"
+    },
+    {
+      "id": 3,
+      "html": "<div class=\"card border-0 rounded-0 border-top\">\n  <div class=\"card-body\">\n    <p><strong>Price:</strong> $299</p>\n    <p><strong>Stock:</strong> 6 pcs</p>\n  </div>\n</div>"
+    }
+  ]
+}
