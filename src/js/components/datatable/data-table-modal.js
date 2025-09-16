@@ -28,7 +28,6 @@ export class DataTableModal extends CustomElementBase {
     eventHandlers = {
         [TableConfig.events.showModal]: (objEvent) => {
             if(objEvent.detail.data){
-                this.type this.setAttribute('type', objEvent.detail.data.type ?? this.type);
                 this.modalBody.innerHTML = objEvent.detail.data.html;
             }
             this.bsModal.show();

@@ -59,6 +59,23 @@ export class DataTableRow extends CustomElementBase {
         const method = config[strMethod];
         const prevAction = this.action;
         const prevMethod = this.method;
+        
+        if (prevMethod && prevMethod !== method) {
+            const closeHandlers = {
+                [TableConfig.methods.inline]: () => {
+                    this.triggerCustomEvent(TableConfig.events.hideCollapse, { rowId });
+                },
+                [TableConfig.methods.modal]: () => {
+                    this.triggerCustomEvent(TableConfig.events.hideModal);
+                },
+                [TableConfig.methods.offcanvas]: () => {
+                    this.triggerCustomEvent(TableConfig.events.hideOffcanvas);
+                }
+            };
+
+            closeHandlers[prevMethod]?.();
+            this.isOpen = false;
+        }
 
         this.action = action;
         this.method = method;
@@ -83,16 +100,16 @@ export class DataTableRow extends CustomElementBase {
             },
             [TableConfig.methods.modal]: () => {
                 this.triggerCustomEvent(
-                    !this.isOpen ? TableConfig.events.hideModal : TableConfig.events.showModal
+                    !this.isOpen ? TableConfig.events.showModal : TableConfig.events.hideModal
                 );
             },
             [TableConfig.methods.offcanvas]: () => {
                 this.triggerCustomEvent(
-                    !this.isOpen ? TableConfig.events.hideOffcanvas : TableConfig.events.showOffcanvas
+                    !this.isOpen ? TableConfig.events.showOffcanvas : TableConfig.events.hideOffcanvas
                 );
             }
         };
-        
+
         if (prevAction !== action || prevMethod !== method) {
             this.classList.add(TableConfig.modifiers.isLoading);
 
@@ -112,10 +129,11 @@ export class DataTableRow extends CustomElementBase {
 
             return;
         }
-        
+
         toggleHandlers[method]?.();
         this.isOpen = !this.isOpen;
     }
+
 }
 
 customElements.define(DataTableRow.tagName, DataTableRow);

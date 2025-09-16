@@ -6,6 +6,7 @@ import './data-table-filters.js';
 import './data-table-header.js';
 import './data-table-pagination.js';
 import './data-table-row-detail.js';
+import './data-table-empty.js';
 import './data-table-search.js';
 import './data-table-modal.js';
 import './data-table-offcanvas.js';

@@ -16,6 +16,17 @@ export class DataTableFilters extends CustomElementBase {
         super();
     }
     
+    connectedCallback() {
+        this.dataTable = this.closest(TableConfig.selectors.dataTable);
+        this.dataTable.addEventListener(TableConfig.events.updated, this);
+        this.filters = this.querySelectorAll(".js-data-table-filters-dropdown");
+
+        this.filters.forEach((dropdown) => {
+            const textElement = dropdown.querySelector(".dropdown-toggle");
+            dropdown.setAttribute("data-default-text", textElement.textContent.trim());
+        });
+    }
+    
     eventHandlers = {
         [DataTableFilters.events.click]: (event) =>{
             let domElement = event.target;
@@ -28,9 +39,25 @@ export class DataTableFilters extends CustomElementBase {
                     }
                     this.triggerCustomEvent(TableConfig.events.filterChange);
                 });
-
             }
-        }
+        },
+        [TableConfig.events.updated]: () => {
+            this.update();
+        }   
+    }
+    
+    update(){
+        this.filters.forEach((dropdown) => {
+            const textElement = dropdown.querySelector(".dropdown-toggle");
+            const checkboxes = dropdown.querySelectorAll(".dropdown-menu input[type=checkbox]");
+            const defaultText = dropdown.dataset.defaultText;
+
+            const selected = Array.from(checkboxes)
+                .filter(x => x.checked)
+                .map(x => x.value);
+
+            textElement.textContent = selected.length > 0 ? `${defaultText}: ${selected.join(", ")}` : defaultText;
+        })
     }
 }
 
