@@ -4,11 +4,12 @@ export class DataTablePagination extends CustomElementBase {
     static tagName = 'data-table-pagination';
 
     static events = {
-        pageChange: TableConfig.events.pageChange
+        click: 'click'
     }
     
     static observedEvents = [
-        TableConfig.events.listUpdated
+        TableConfig.events.listUpdated,
+        DataTablePagination.events.click,
     ]
     
     static attributes = {
@@ -35,12 +36,26 @@ export class DataTablePagination extends CustomElementBase {
             const data = event.detail.data ?? {};
             this.setAttribute(DataTablePagination.attributes.currentPage, data.pageNum);
             this.setAttribute(DataTablePagination.attributes.totalPages, data.totalItems);
-            this.update();
+            this.update(data);
+        },
+        [DataTablePagination.events.click]: (event) =>{
+            event.preventDefault();
+            const page = this.querySelector('.page-item.active').dataset.page;
+            let pageNum = Number(page);
+            if(isNaN(pageNum)){
+                if(page === 'prev'){
+                    pageNum = this.currentPage--
+                } else if(page === 'next'){
+                    pageNum = this.currentPage++
+                }
+            }
+            this.changePage(pageNum);
         }
     }
 
     update(data) {
-        this.innerHTML = data.pagination;
+        console.log(data);
+        this.innerHTML = data?.paginationHtml ?? '';
     }
 
     changePage(page){
@@ -52,9 +67,7 @@ export class DataTablePagination extends CustomElementBase {
         }
         this.currentPage = page;
         this.setAttribute(DataTablePagination.attributes.currentPage, page);
-        this.dispatchEvent(new CustomEvent(TableConfig.events.pageChange, {
-            detail: { page },
-        }));
+        this.triggerCustomEvent(TableConfig.events.pageChange, { page });
     }
 }
 
