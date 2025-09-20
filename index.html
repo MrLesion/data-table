@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-12">
             <h1>DataTable</h1>
-            <data-table edit-mode="modal" details-mode="offcanvas md:inline" loading="false">
+            <data-table loading="false">
                 <form id="data-table-form" class="js-data-table-form">
                     <input type="hidden" name="_sort" value="product">
                     <input type="hidden" name="_order" value="desc">
@@ -148,7 +148,6 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title">Modal title</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
@@ -175,6 +174,37 @@
                         </div>
                     </div>
                 </data-table-offcanvas>
+                
+                <!--Alerts-->
+                <data-table-feedback type="toast" class="toast position-fixed bottom-0 end-0 m-3" role="alert"
+                                     aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <img src="..." class="rounded me-2" alt="...">
+                        <strong class="me-auto">Bootstrap</strong>
+                        <small>11 mins ago</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        Hello, world! This is a toast message.
+                    </div>
+                </data-table-feedback>
+                <data-table-feedback  class="modal" type="modal" mode="confirm" tabindex="-1" role="alert" aria-hidden ="true" aria-modal="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Modal title</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Modal body text goes here.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary js-data-table-feedback-cancel-btn" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary js-data-table-feedback-confirm-btn">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </data-table-feedback>
             </data-table>
         </div>
     </div>

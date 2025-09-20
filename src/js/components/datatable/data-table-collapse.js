@@ -1,7 +1,7 @@
 ﻿import {CustomElementBase} from '../custom-element-base.js';
 import TableConfig from './data-table-config.js';
-export class DataTableRowDetail extends CustomElementBase {
-    static tagName = 'data-table-row-detail';
+export class DataTableCollapse extends CustomElementBase {
+    static tagName = 'data-table-collapse';
 
     static events = {}
 
@@ -40,4 +40,4 @@ export class DataTableRowDetail extends CustomElementBase {
     }
 }
 
-customElements.define(DataTableRowDetail.tagName, DataTableRowDetail);
+customElements.define(DataTableCollapse.tagName, DataTableCollapse);

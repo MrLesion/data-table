@@ -21,6 +21,7 @@
         hideOffcanvas: 'data-table:hide-offcanvas',
         showCollapse: 'data-table:show-collapse',
         hideCollapse: 'data-table:hide-collapse',
+        feedback: 'data-table:feedback',
     },
     endpoints: {
         list: 'https://my-json-server.typicode.com/MrLesion/data-table/items',
@@ -37,7 +38,7 @@
         dataTable: 'data-table',
         dataTableRow: 'data-table-row',
         dataTableRowSelect: '.row-select',
-        dataTableRowDetail: 'data-table-row-detail',
+        dataTableCollapse: 'data-table-collapse',
         dataTableRowActions: 'data-table-row-actions',
         dataTableHeader: 'data-table-header',
         dataTableFilters: 'data-table-filters',

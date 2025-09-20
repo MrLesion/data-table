@@ -1,24 +1,24 @@
 ﻿import {CustomElementBase} from '../custom-element-base.js';
 import TableConfig from './data-table-config.js';
-import {matchesBreakpoint} from "./data-table-utillities.js";
+
 import './data-table-row.js';
-import './data-table-filters.js';
-import './data-table-header.js';
-import './data-table-pagination.js';
-import './data-table-row-detail.js';
 import './data-table-empty.js';
+
+import './data-table-header.js';
+import './data-table-filters.js';
+import './data-table-pagination.js';
 import './data-table-search.js';
+
+import './data-table-collapse.js';
 import './data-table-modal.js';
 import './data-table-offcanvas.js';
+import './data-table-feedback.js';
 
 
 export class DataTable extends CustomElementBase {
     static tagName = 'data-table';
 
-    static attributes = {
-        editMode: 'edit-mode',
-        detailsMode: 'details-mode',
-    }
+    static attributes = {}
 
     static events = {
         update: TableConfig.events.update,
@@ -36,25 +36,14 @@ export class DataTable extends CustomElementBase {
     constructor() {
         super();
 
-        this.configuration = {
-            editMode: this.getAttribute(DataTable.attributes.editMode) ?? 'inline',
-            detailsMode: this.getAttribute(DataTable.attributes.detailsMode) ?? 'inline'
-        };
-
         this.domParser = new DOMParser();
     }
 
     connectedCallback() {
         this.form = this.querySelector('.js-data-table-form');
-        this.updateResponsiveMode();
-        window.addEventListener('resize', this.updateResponsiveMode.bind(this));
 
         //SSR
         this.updateList();
-    }
-
-    disconnectedCallback() {
-        window.removeEventListener('resize', this.updateResponsiveMode.bind(this));
     }
 
     eventHandlers = {
@@ -133,45 +122,6 @@ export class DataTable extends CustomElementBase {
             });
             this.triggerCustomEvent(TableConfig.events.listUpdated, {data: listJson});
         });
-    }
-    
-
-    updateResponsiveMode() {
-        Object.keys(DataTable.attributes).forEach((attrKey) => {
-            const attr = this.getAttribute(DataTable.attributes[attrKey]);
-
-            if (!attr) {
-                return;
-            }
-
-            const parts = attr.split(/\s+/);
-            let baseMode = null;
-            let responsive = [];
-
-            parts.forEach(part => {
-                if (part.includes(':')) {
-                    const [breakpoint, mode] = part.split(':');
-                    responsive.push({breakpoint, mode});
-                } else {
-                    baseMode = part;
-                }
-            });
-
-            let mode = baseMode;
-
-            responsive.forEach(({breakpoint, mode: breakpointMode}) => {
-                if (matchesBreakpoint(breakpoint)) {
-                    mode = breakpointMode;
-                }
-            });
-
-            this.configuration[attrKey] = mode;
-            this.setAttribute(`resolved-${DataTable.attributes[attrKey]}`, mode);
-        })
-    }
-
-    getConfiguration() {
-        return this.configuration;
     }
 }
 

@@ -1,5 +1,5 @@
 ﻿import {CustomElementBase} from '../custom-element-base.js';
-import './data-table-row-actions.js';
+import './data-table-row-action.js';
 import TableConfig from './data-table-config.js';
 
 export class DataTableRow extends CustomElementBase {
@@ -35,7 +35,6 @@ export class DataTableRow extends CustomElementBase {
 
     eventHandlers = {
         [TableConfig.events.rowActionDetails]: (objEvent) => {
-            
             this.handleAction('details', 'detailsMode', objEvent, TableConfig.templates.tableRowDetails)
         },
         
@@ -44,19 +43,31 @@ export class DataTableRow extends CustomElementBase {
         },
 
         [TableConfig.events.rowActionDelete]: (objEvent) => {
+            this.triggerCustomEvent(TableConfig.events.feedback, {
+                mode: objEvent.detail.mode,
+                type: objEvent.detail.type,
+                callback: () => {
+                    this.dataTable.update(TableConfig.endpoints.details, null, {
+                        method: 'DELETE',
+                        body: { rowId: objEvent.detail.rowId }
+                    });
+                }
+            })
+            /*
             if (confirm('Are you sure you want to delete this record?')) {
                 this.dataTable.update(TableConfig.endpoints.details, null, {
                     method: 'DELETE',
                     body: { rowId: objEvent.detail.rowId }
                 });
             }
+            
+             */
         }
     };
 
     async handleAction(action, strMethod, objEvent, template) {
         const rowId = objEvent.detail.rowId;
-        const config = this.dataTable?.getConfiguration();
-        const method = config[strMethod];
+        const method = objEvent.detail.mode;
         const prevAction = this.action;
         const prevMethod = this.method;
         

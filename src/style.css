@@ -7,7 +7,7 @@
     }
 }
 
-data-table-row-detail{
+data-table-collapse, data-table-feedback{
     display: block;
     width: 100%;
     box-sizing: border-box;
