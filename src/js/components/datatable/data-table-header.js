@@ -37,6 +37,7 @@ export class DataTableHeader extends CustomElementBase {
     setSort(domElement){
         const sortBy = domElement.dataset.sortBy;
         const sortOrder = domElement.dataset.sortOrder ?? 'asc';
+        this.querySelectorAll(DataTableHeader.selectors.sortHeader).forEach(sh => sh.dataset.sortOrder = '');
         domElement.dataset.sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
         this.triggerCustomEvent(TableConfig.events.sortChange, { sortBy, sortOrder });
     }
