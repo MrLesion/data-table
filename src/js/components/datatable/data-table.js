@@ -1,18 +1,21 @@
 ﻿import {CustomElementBase} from '../custom-element-base.js';
 import TableConfig from './data-table-config.js';
 
+import '../bootstrap-wrapper.js';
+
 import './data-table-row.js';
 import './data-table-empty.js';
 
 import './data-table-header.js';
+import './data-table-footer.js';
 import './data-table-filters.js';
 import './data-table-pagination.js';
-import './data-table-search.js';
 
 import './data-table-collapse.js';
 import './data-table-modal.js';
 import './data-table-offcanvas.js';
 import './data-table-feedback.js';
+
 
 
 export class DataTable extends CustomElementBase {
@@ -101,6 +104,7 @@ export class DataTable extends CustomElementBase {
     }
     
     async updateList(){
+        this.setAttribute('loading', 'true');
         const urlParams = new URLSearchParams(new FormData(this.form));
         const response = await fetch(`${TableConfig.endpoints._list}?${urlParams.toString()}`, {
             method: 'GET',

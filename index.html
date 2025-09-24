@@ -11,7 +11,6 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <h1>DataTable</h1>
             <data-table loading="false">
                 <form id="data-table-form" class="js-data-table-form">
                     <input type="hidden" name="_sort" value="product">
@@ -19,155 +18,243 @@
                     <input type="hidden" name="_limit" value="2">
                     <input type="hidden" name="_page" value="1">
                 </form>
-                <div class="card w-100 rounded-3">
-                    <div class="card-body d-flex gap-4">
-                        <data-table-search>
-                            <div class="input-group">
-                                <input type="search" class="form-control" name="q" placeholder="Search..."
-                                       aria-label="Search" form="data-table-form">
-                                <button class="btn btn-outline-secondary" type="button">Search</button>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center">
+                                <h2>DataTable</h2>
+                                <div class="ms-auto">
+                                    <button type="button" class="btn btn-primary">Opret ny</button>
+                                </div>
                             </div>
-                        </data-table-search>
-                        <data-table-filters>
-                            <div class="d-flex gap-4">
-                                <div class="btn-group js-data-table-filters-dropdown">
-                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                            data-bs-toggle="dropdown" data-bs-auto-close="outside"
-                                            aria-expanded="false">
-                                        Status
-                                    </button>
-                                    <ul class="dropdown-menu pb-0">
-                                        <li>
-                                            <div class="dropdown-item">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card mb-2 p-1 bg-light">
+                                <data-table-filters>
+                                    <ul class="nav nav-tabs border-0 gap-1" id="filterTabs" role="tablist">
+                                        <li class="nav-item">
+                                            
+                                            <button class="btn btn-outline-light bg-white text-dark d-flex gap-2 align-items-center" data-filter="all">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="1"
-                                                           id="status1" name="status" form="data-table-form">
-                                                    <label class="form-check-label" for="status1">
+                                                    <input class="form-check-input js-data-table-submit-filters" type="radio" value="1"
+                                                           id="status-tab1" name="status" form="data-table-form">
+                                                    <label class="form-check-label" for="status-tab1">
                                                         Active
                                                     </label>
                                                 </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="dropdown-item">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="2"
-                                                           id="status2" name="status" form="data-table-form">
-                                                    <label class="form-check-label" for="status2">
-                                                        Pending
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="dropdown-item">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="3"
-                                                           id="status3" name="status" form="data-table-form">
-                                                    <label class="form-check-label" for="status3">
-                                                        Completed
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <hr class="dropdown-divider mb-0">
-                                        </li>
-                                        <li class="d-flex justify-content-between">
-                                            <button type="button"
-                                                    class="btn btn-sm dropdown-item text-center bg-primary text-white"
-                                                    data-bs-dismiss="dropdown" aria-label="Close">
-                                                Apply
+                                                <span class="badge rounded-pill text-bg-secondary">5</span>
                                             </button>
                                         </li>
+                                        <li class="nav-item">
+                                            <button class="btn btn-outline-light bg-white text-dark d-flex gap-2 align-items-center" data-filter="all">
+                                                <div class="form-check">
+                                                    <input class="form-check-input js-data-table-submit-filters" type="radio" value="2"
+                                                           id="status-tab2" name="status" form="data-table-form">
+                                                    <label class="form-check-label" for="status-tab2">
+                                                        Waiting
+                                                    </label>
+                                                </div>
+                                                <span class="badge rounded-pill text-bg-secondary">34</span>
+                                            </button>
+                                        </li>
+                                        <li class="nav-item">
+    
+                                                <button class="btn btn-outline-light bg-white text-dark d-flex gap-2 align-items-center" data-filter="all">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input js-data-table-submit-filters" type="radio" value="3"
+                                                               id="status-tab3" name="status" form="data-table-form">
+                                                        <label class="form-check-label" for="status-tab3">
+                                                            Received
+                                                        </label>
+                                                    </div>
+                                                    <span class="badge rounded-pill text-bg-secondary">0</span>
+                                                </button>
+                                        </li>
                                     </ul>
+                                </data-table-filters>
+                            </div>
+                        </div>
+                    </div>
+
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card w-100 rounded-3">
+                            <div class="card-body">
+                                <data-table-filters class="d-flex gap-4">
+                                    <data-table-filters-search>
+                                        <div class="input-group">
+                                            <input type="search" class="form-control" name="q" placeholder="Search..."
+                                                   aria-label="Search" form="data-table-form">
+                                            <button class="btn btn-outline-secondary js-data-table-submit-filters" type="button">Search</button>
+                                        </div>
+                                    </data-table-filters-search>
+                                    <div class="d-flex gap-4">
+                                        <div class="btn-group js-data-table-filters-dropdown">
+                                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                                    data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                                                    aria-expanded="false">
+                                                Status
+                                            </button>
+                                            <ul class="dropdown-menu pb-0">
+                                                <li>
+                                                    <div class="dropdown-item">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="1"
+                                                                   id="status1" name="status" form="data-table-form">
+                                                            <label class="form-check-label" for="status1">
+                                                                Active
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="dropdown-item">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="2"
+                                                                   id="status2" name="status" form="data-table-form">
+                                                            <label class="form-check-label" for="status2">
+                                                                Pending
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="dropdown-item">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="3"
+                                                                   id="status3" name="status" form="data-table-form">
+                                                            <label class="form-check-label" for="status3">
+                                                                Completed
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <hr class="dropdown-divider mb-0">
+                                                </li>
+                                                <li class="d-flex justify-content-between">
+                                                    <button type="button"
+                                                            class="btn btn-sm dropdown-item text-center bg-primary text-white js-data-table-submit-filters"
+                                                            data-bs-dismiss="dropdown" aria-label="Close">
+                                                        Apply
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </data-table-filters>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="my-2 position-relative">
+                            <!-- loader -->
+                            <div class="data-table-loader">
+                                <div class="spinner-border">
+                                    <span class="visually-hidden">Loading...</span>
                                 </div>
                             </div>
-                        </data-table-filters>
-                    </div>
-                </div>
-                
 
-                <div class="my-2 position-relative">
-                    <!-- loader -->
-                    <div class="data-table-loader">
-                        <div class="spinner-border">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
-
-                    <!-- head -->
-                    <data-table-header class="d-none d-md-flex bg-light fw-bold border rounded-top-3">
-                        <label class="p-2" style="width:40px;">
-                            <input type="checkbox">
-                        </label>
-                        <div class="p-2 cursor-pointer data-table-header-sort js-data-table-header-sort" style="flex:2 1 0;"
-                             data-sort-by="id" data-sort-order="">Product
-                            <span class="sort-icon none">
+                            <!-- head -->
+                            <data-table-header class="d-none d-md-flex bg-light fw-bold border rounded-top-3">
+                                <label class="p-2" style="width:40px;">
+                                    <input type="checkbox">
+                                </label>
+                                <div class="p-2 cursor-pointer data-table-header-sort js-data-table-header-sort" style="flex:2 1 0;"
+                                     data-sort-by="id" data-sort-order="">Product
+                                    <span class="sort-icon none">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8 4-4 4 4"></path><path d="m11 16-4 4-4-4"></path><path d="M7 4v16"></path><path d="M15 8h6"></path><path d="M15 16h6"></path><path d="M13 12h8"></path></svg>
                             </span>
-                            <span class="sort-icon asc">
+                                    <span class="sort-icon asc">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8 4-4 4 4"></path><path d="M7 4v16"></path><path d="M11 12h4"></path><path d="M11 16h7"></path><path d="M11 20h10"></path></svg>
                             </span>
-                            <span class="sort-icon desc">
+                                    <span class="sort-icon desc">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 16 4 4 4-4"></path><path d="M7 20V4"></path><path d="M11 4h10"></path><path d="M11 8h7"></path><path d="M11 12h4"></path></svg>
                             </span>
-                        </div>
-                        <div class="p-2 cursor-pointer data-table-header-sort js-data-table-header-sort" style="flex:1 1 0;"
-                             data-sort-by="price" data-sort-order="">Price
-                            <span class="sort-icon none">
+                                </div>
+                                <div class="p-2 cursor-pointer data-table-header-sort js-data-table-header-sort" style="flex:1 1 0;"
+                                     data-sort-by="price" data-sort-order="">Price
+                                    <span class="sort-icon none">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8 4-4 4 4"></path><path d="m11 16-4 4-4-4"></path><path d="M7 4v16"></path><path d="M15 8h6"></path><path d="M15 16h6"></path><path d="M13 12h8"></path></svg>
                             </span>
-                            <span class="sort-icon asc">
+                                    <span class="sort-icon asc">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8 4-4 4 4"></path><path d="M7 4v16"></path><path d="M11 12h4"></path><path d="M11 16h7"></path><path d="M11 20h10"></path></svg>
                             </span>
-                            <span class="sort-icon desc">
+                                    <span class="sort-icon desc">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 16 4 4 4-4"></path><path d="M7 20V4"></path><path d="M11 4h10"></path><path d="M11 8h7"></path><path d="M11 12h4"></path></svg>
                             </span></div>
-                        <div class="p-2 cursor-pointer data-table-header-sort js-data-table-header-sort" style="flex:1 1 0;"
-                             data-sort-by="stock" data-sort-order="">Stock
-                            <span class="sort-icon none">
+                                <div class="p-2 cursor-pointer data-table-header-sort js-data-table-header-sort" style="flex:1 1 0;"
+                                     data-sort-by="stock" data-sort-order="">Stock
+                                    <span class="sort-icon none">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8 4-4 4 4"></path><path d="m11 16-4 4-4-4"></path><path d="M7 4v16"></path><path d="M15 8h6"></path><path d="M15 16h6"></path><path d="M13 12h8"></path></svg>
                             </span>
-                            <span class="sort-icon asc">
+                                    <span class="sort-icon asc">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8 4-4 4 4"></path><path d="M7 4v16"></path><path d="M11 12h4"></path><path d="M11 16h7"></path><path d="M11 20h10"></path></svg>
                             </span>
-                            <span class="sort-icon desc">
+                                    <span class="sort-icon desc">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 16 4 4 4-4"></path><path d="M7 20V4"></path><path d="M11 4h10"></path><path d="M11 8h7"></path><path d="M11 12h4"></path></svg>
                             </span></div>
-                        <div class="p-2" style="width:200px;"></div>
-                    </data-table-header>
-                    <div class="data-table-body js-data-table-body"></div>
-                    <data-table-empty class="d-none">
-                        <div class="d-block border border-top-0 rounded-bottom-3">
-                            <div class="text-center p-2">
-                                <p class="fw-bold mb-0 text-danger opacity-75">No results found</p>
-                            </div>
+                                <div class="p-2" style="width:200px;"></div>
+                            </data-table-header>
+                            <div class="data-table-body js-data-table-body"></div>
+                            <data-table-footer>
+                                <data-table-row class="d-block border border-top-0">
+                                    <div class="d-flex flex-column flex-md-row align-items-end justify-content-end">
+                                        <div class="p-2">
+                                            <div class="d-flex flex-wrap gap-1">
+                                                <data-table-row-action mode="modal" action="add">
+                                                    <button class="btn btn-sm btn-outline-primary" type="button">
+                                                        + Tilføj række
+                                                    </button>
+                                                </data-table-row-action>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <data-table-collapse></data-table-collapse>
+                                </data-table-row>
+                            </data-table-footer>
+                            <data-table-empty class="d-none">
+                                <div class="d-block border border-top-0 rounded-bottom-3">
+                                    <div class="text-center p-2">
+                                        <p class="fw-bold mb-0 text-danger opacity-75">No results found</p>
+                                    </div>
+                                </div>
+                            </data-table-empty>
                         </div>
-                    </data-table-empty>
+                    </div>
                 </div>
-                <data-table-pagination current-page="1" total-pages="3" page-size="2">
-                    <nav aria-label="Table pagination" class="d-flex justify-content-center">
-                        <ul class="pagination pagination-sm mb-0">
-                            <li class="page-item disabled" data-page="prev">
-                                <span class="page-link">Previous</span>
-                            </li>
-                            <li class="page-item active">
-                                <span class="page-link" data-page="1">1</span>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" data-page="2">2</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" data-page="3">3</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" data-page="next">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </data-table-pagination>
 
+                <div class="row">
+                    <div class="col-12">
+                        <data-table-pagination current-page="1" total-pages="3" page-size="2">
+                            <nav aria-label="Table pagination" class="d-flex justify-content-center">
+                                <ul class="pagination pagination-sm mb-0">
+                                    <li class="page-item disabled" data-page="prev">
+                                        <span class="page-link">Previous</span>
+                                    </li>
+                                    <li class="page-item active">
+                                        <span class="page-link" data-page="1">1</span>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" data-page="2">2</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" data-page="3">3</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" data-page="next">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </data-table-pagination>
+                    </div>
+                </div>
                 <data-table-modal type="">
                     <div class="modal fade" tabindex="-1">
                         <div class="modal-dialog">

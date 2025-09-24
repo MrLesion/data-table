@@ -12,6 +12,7 @@
         rowActionDetails: 'data-table:row-action:details',
         rowActionEdit: 'data-table:row-action:edit',
         rowActionDelete: 'data-table:row-action:delete',
+        rowActionAdd: 'data-table:row-action:add',
         searchChange: 'data-table:search-change',
         loadingStart: 'data-table:loading-start',
         loadingEnd: 'data-table:loading-end',
@@ -28,11 +29,12 @@
         _list: 'https://my-json-server.typicode.com/MrLesion/data-table/list',
         details: 'https://my-json-server.typicode.com/MrLesion/data-table/details',
         edit: 'https://my-json-server.typicode.com/MrLesion/data-table/edit',
+        add: 'https://my-json-server.typicode.com/MrLesion/data-table/list',
     },
     templates: {
         tableRowDetails: '/template/path/to/table-row-details.cshtml',
         tableRowEdit: '/template/path/to/table-row-edit.cshtml',
-        table: '/template/path/to/table.cshtml',
+        tableRowAdd: '/template/path/to/table-row-add.cshtml'
     },
     selectors: {
         dataTable: 'data-table',

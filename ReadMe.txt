@@ -1,0 +1,1 @@
+﻿https://www.figma.com/design/4DFdsVN7pFx8BhQc9rblvR/Compass-Group---Cockpit---Konceptdesign--Untitled-UI-?node-id=12765-101464&p=f

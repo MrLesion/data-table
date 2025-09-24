@@ -1,5 +1,6 @@
 ﻿import {CustomElementBase} from '../custom-element-base.js';
 import TableConfig from './data-table-config.js';
+import './data-table-filters-search.js';
 
 export class DataTableFilters extends CustomElementBase {
     static tagName = 'data-table-filters';
@@ -30,15 +31,18 @@ export class DataTableFilters extends CustomElementBase {
     eventHandlers = {
         [DataTableFilters.events.click]: (event) =>{
             let domElement = event.target;
-            if (domElement.dataset && domElement.dataset.bsDismiss) {
+            if (domElement.classList.contains('js-data-table-submit-filters')) {
                 const dropdowns = this.querySelectorAll('.dropdown-toggle');
-                dropdowns.forEach(dropdown => {
-                    const bsDropdown = bootstrap.Dropdown.getInstance(dropdown);
-                    if (bsDropdown) {
-                        bsDropdown.hide();
-                    }
-                    this.triggerCustomEvent(TableConfig.events.filterChange);
-                });
+                if(dropdowns.length > 0){
+                    dropdowns.forEach(dropdown => {
+                        const bsDropdown = bootstrap.Dropdown.getInstance(dropdown);
+                        if (bsDropdown) {
+                            bsDropdown.hide();
+                        }
+                    });
+                }
+                
+                this.triggerCustomEvent(TableConfig.events.filterChange);
             }
         },
         [TableConfig.events.updated]: () => {

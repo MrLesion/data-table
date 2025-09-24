@@ -1,15 +1,9 @@
 ﻿import {CustomElementBase} from '../custom-element-base.js';
 import TableConfig from "./data-table-config.js";
-import {matchesBreakpoint} from "./data-table-utillities.js";
+import {matchesBreakpoint, newGuid} from "./data-table-utillities.js";
 
 export class DataTableRowAction extends CustomElementBase {
     static tagName = 'data-table-row-action';
-
-    static selectors = {
-        detailsBtn: '.js-data-table-row-action-details-btn',
-        editBtn: '.js-data-table-row-action-edit-btn',
-        deleteBtn: '.js-data-table-row-action-delete-btn',
-    }
     
     static attributes = {
         mode: 'mode',
@@ -43,6 +37,7 @@ export class DataTableRowAction extends CustomElementBase {
 
     eventHandlers = {
         [DataTableRowAction.events.click]: (event) =>{
+            
             switch (this.getAttribute(DataTableRowAction.attributes.action)) {
                 case 'details':
                     this.triggerCustomEvent(TableConfig.events.rowActionDetails, { rowId: this.dataTableRow.id, mode: this.resolvedMode });
@@ -52,6 +47,9 @@ export class DataTableRowAction extends CustomElementBase {
                     break;
                 case 'delete':
                     this.triggerCustomEvent(TableConfig.events.rowActionDelete, { rowId: this.dataTableRow.id, mode: 'confirm', type: 'modal' });
+                    break;
+                case 'add':
+                    this.triggerCustomEvent(TableConfig.events.rowActionAdd, { rowId: newGuid(), mode: this.resolvedMode });
                     break;
             }
         }

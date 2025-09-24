@@ -14,7 +14,6 @@ export class DataTableModal extends CustomElementBase {
     }
     
     connectedCallback() {
-        
         this.dataTable = this.closest(TableConfig.selectors.dataTable);
         this.dataTable.addEventListener(TableConfig.events.showModal, this);
         this.dataTable.addEventListener(TableConfig.events.hideModal, this);
