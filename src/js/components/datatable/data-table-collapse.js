@@ -13,8 +13,8 @@ export class DataTableCollapse extends CustomElementBase {
     connectedCallback() {
         this.dataTable = this.closest(TableConfig.selectors.dataTable);
         this.dataTableRow = this.closest(TableConfig.selectors.dataTableRow);
-        this.dataTable.addEventListener(TableConfig.events.showCollapse, this);
-        this.dataTable.addEventListener(TableConfig.events.hideCollapse, this);
+        this.dataTableRow.addEventListener(TableConfig.events.showCollapse, this);
+        this.dataTableRow.addEventListener(TableConfig.events.hideCollapse, this);
         
         this.bsCollapse = bootstrap.Collapse.getOrCreateInstance(this, {
             toggle: false
@@ -26,8 +26,8 @@ export class DataTableCollapse extends CustomElementBase {
             if(objEvent.detail.rowId !== this.dataTableRow.id){
                 return;
             }
-            if(objEvent.detail.data){
-                this.innerHTML = objEvent.detail.data.html;
+            if(objEvent.detail.html){
+                this.innerHTML = objEvent.detail.html;
             }
             this.bsCollapse.show();
         },

@@ -18,11 +18,16 @@
         loadingEnd: 'data-table:loading-end',
         showModal: 'data-table:show-modal',
         hideModal: 'data-table:hide-modal',
+        toggleModal: 'data-table:toggle-modal',
         showOffcanvas: 'data-table:show-offcanvas',
         hideOffcanvas: 'data-table:hide-offcanvas',
+        toggleOffcanvas: 'data-table:toggle-offcanvas',
         showCollapse: 'data-table:show-collapse',
         hideCollapse: 'data-table:hide-collapse',
+        toggleCollapse: 'data-table:toggle-collapse',
         feedback: 'data-table:feedback',
+        rowAction: 'data-table:row:action',
+        
     },
     endpoints: {
         list: 'https://my-json-server.typicode.com/MrLesion/data-table/items',

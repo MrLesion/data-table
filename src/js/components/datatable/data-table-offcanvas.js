@@ -14,6 +14,7 @@ export class DataTableOffcanvas extends CustomElementBase {
     }
 
     connectedCallback() {
+        this 
         this.dataTable = this.closest(TableConfig.selectors.dataTable);
         this.dataTable.addEventListener(TableConfig.events.showOffcanvas, this);
         this.dataTable.addEventListener(TableConfig.events.hideOffcanvas, this);
@@ -26,8 +27,8 @@ export class DataTableOffcanvas extends CustomElementBase {
 
     eventHandlers = {
         [TableConfig.events.showOffcanvas]: (objEvent) => {
-            if(objEvent.detail.data){
-                this.offcanvasBody.innerHTML = objEvent.detail.data.html;
+            if(objEvent.detail.html){
+                this.offcanvasBody.innerHTML = objEvent.detail.html;
             }
             this.bsOffcanvas.show();
         },

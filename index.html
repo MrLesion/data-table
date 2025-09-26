@@ -204,13 +204,23 @@
                             </data-table-header>
                             <div class="data-table-body js-data-table-body"></div>
                             <data-table-footer>
-                                <data-table-row class="d-block border border-top-0">
+                                <data-table-row id="3" class="d-block border border-top-0">
                                     <div class="d-flex flex-column flex-md-row align-items-end justify-content-end">
                                         <div class="p-2">
                                             <div class="d-flex flex-wrap gap-1">
-                                                <data-table-row-action mode="modal" action="add">
+                                                <data-table-row-action mode="modal md:inline" method="GET" endpoint="/details">
                                                     <button class="btn btn-sm btn-outline-primary" type="button">
-                                                        + Tilføj række
+                                                        + get
+                                                    </button>
+                                                </data-table-row-action>
+                                                <data-table-row-action mode="offcanvas" method="POST" endpoint="/details">
+                                                    <button class="btn btn-sm btn-outline-primary" type="button">
+                                                        + post
+                                                    </button>
+                                                </data-table-row-action>
+                                                <data-table-row-action mode="offcanvas md:inline" method="DELETE" endpoint="/details">
+                                                    <button class="btn btn-sm btn-outline-primary" type="button">
+                                                        + delete
                                                     </button>
                                                 </data-table-row-action>
                                             </div>

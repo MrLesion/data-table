@@ -7,7 +7,8 @@ export class DataTableRowAction extends CustomElementBase {
     
     static attributes = {
         mode: 'mode',
-        action: 'action',
+        method: 'method',
+        endpoint: 'endpoint',
     }
 
     static events = {
@@ -24,8 +25,10 @@ export class DataTableRowAction extends CustomElementBase {
     connectedCallback() {
         this.dataTableRow = this.closest(TableConfig.selectors.dataTableRow);
         this.mode = this.getAttribute(DataTableRowAction.attributes.mode) ?? '';
+        this.endpoint = this.getAttribute(DataTableRowAction.attributes.endpoint) ?? '';
+        this.method = this.getAttribute(DataTableRowAction.attributes.method) ?? '';
         this.resolvedMode = '';
-        this.action = this.getAttribute(DataTableRowAction.attributes.action) ?? '';
+        
         
         this.updateResponsiveMode();
         window.addEventListener('resize', this.updateResponsiveMode.bind(this));
@@ -37,24 +40,14 @@ export class DataTableRowAction extends CustomElementBase {
 
     eventHandlers = {
         [DataTableRowAction.events.click]: (event) =>{
-            
-            switch (this.getAttribute(DataTableRowAction.attributes.action)) {
-                case 'details':
-                    this.triggerCustomEvent(TableConfig.events.rowActionDetails, { rowId: this.dataTableRow.id, mode: this.resolvedMode });
-                    break;
-                case 'edit':
-                    this.triggerCustomEvent(TableConfig.events.rowActionEdit, { rowId: this.dataTableRow.id, mode: this.resolvedMode });
-                    break;
-                case 'delete':
-                    this.triggerCustomEvent(TableConfig.events.rowActionDelete, { rowId: this.dataTableRow.id, mode: 'confirm', type: 'modal' });
-                    break;
-                case 'add':
-                    this.triggerCustomEvent(TableConfig.events.rowActionAdd, { rowId: newGuid(), mode: this.resolvedMode });
-                    break;
-            }
+            this.triggerCustomEvent(TableConfig.events.rowAction, {
+                rowId: this.dataTableRow.id,
+                method: this.method,
+                mode: this.resolvedMode,
+                endpoint:this.endpoint
+            })
         }
     }
-
     updateResponsiveMode() {
         const attr = this.getAttribute(DataTableRowAction.attributes.mode);
 
