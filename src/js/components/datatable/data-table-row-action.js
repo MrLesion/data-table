@@ -5,18 +5,26 @@ import {matchesBreakpoint, newGuid} from "./data-table-utillities.js";
 export class DataTableRowAction extends CustomElementBase {
     static tagName = 'data-table-row-action';
     
-    static attributes = {
-        mode: 'mode',
+    static properties = {
+        presentation: 'presentation',
         method: 'method',
         endpoint: 'endpoint',
+        resolvedPresentation: 'resolved-presentation'
     }
 
     static events = {
-        click: 'click'
+        click: 'click',
+        resize: 'resize'
     }
 
     static observedEvents = [
         DataTableRowAction.events.click
+    ]
+    
+    static observedProperties = [
+        this.properties.presentation,
+        this.properties.method,
+        this.properties.endpoint
     ]
     constructor() {
         super();
@@ -24,18 +32,13 @@ export class DataTableRowAction extends CustomElementBase {
     
     connectedCallback() {
         this.dataTableRow = this.closest(TableConfig.selectors.dataTableRow);
-        this.mode = this.getAttribute(DataTableRowAction.attributes.mode) ?? '';
-        this.endpoint = this.getAttribute(DataTableRowAction.attributes.endpoint) ?? '';
-        this.method = this.getAttribute(DataTableRowAction.attributes.method) ?? '';
-        this.resolvedMode = '';
-        
-        
-        this.updateResponsiveMode();
-        window.addEventListener('resize', this.updateResponsiveMode.bind(this));
+        this.updatePresentation();
+        window.addEventListener(DataTableRowAction.events.resize, this);
+        console.log(this);
     }
 
     disconnectedCallback() {
-        window.removeEventListener('resize', this.updateResponsiveMode.bind(this));
+        window.removeEventListener(DataTableRowAction.events.resize, this);
     }
 
     eventHandlers = {
@@ -43,39 +46,44 @@ export class DataTableRowAction extends CustomElementBase {
             this.triggerCustomEvent(TableConfig.events.rowAction, {
                 rowId: this.dataTableRow.id,
                 method: this.method,
-                mode: this.resolvedMode,
+                presentation: this.resolvedPresentation,
                 endpoint:this.endpoint
             })
+        },
+        [DataTableRowAction.events.resize]: (event) => {
+            this.updatePresentation();
         }
     }
-    updateResponsiveMode() {
-        const attr = this.getAttribute(DataTableRowAction.attributes.mode);
+    updatePresentation() {
+        const attr = this.presentation;
 
-        if (!attr) return;
+        if (!attr) {
+            return;
+        }
 
         const parts = attr.split(/\s+/);
-        let baseMode = null;
+        let basePresentation = null;
         let responsive = [];
 
         parts.forEach(part => {
             if (part.includes(':')) {
-                const [breakpoint, mode] = part.split(':');
-                responsive.push({breakpoint, mode});
+                const [breakpoint, presentation] = part.split(':');
+                responsive.push({breakpoint, presentation});
             } else {
-                baseMode = part;
+                basePresentation = part;
             }
         });
 
-        let mode = baseMode;
+        let presentation = basePresentation;
 
-        responsive.forEach(({breakpoint, mode: breakpointMode}) => {
+        responsive.forEach(({breakpoint, presentation: breakpointPresentation}) => {
             if (matchesBreakpoint(breakpoint)) {
-                mode = breakpointMode;
+                presentation = breakpointPresentation;
             }
         });
 
-        this.resolvedMode = mode;
-        this.setAttribute('resolved-mode', mode);
+        this.resolvedPresentation = presentation;
+        this.setAttribute(DataTableRowAction.properties.resolvedPresentation, presentation);
     }
 }
 

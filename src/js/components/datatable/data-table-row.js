@@ -1,7 +1,6 @@
 ﻿import {CustomElementBase} from '../custom-element-base.js';
 import './data-table-row-action.js';
 import TableConfig from './data-table-config.js';
-import {newGuid} from "./data-table-utillities.js";
 
 export class DataTableRow extends CustomElementBase {
     static tagName = 'data-table-row';
@@ -15,12 +14,14 @@ export class DataTableRow extends CustomElementBase {
 
     static observedEvents = [
         TableConfig.events.rowAction,
-        DataTableRow.events.bsModalClose
+        DataTableRow.events.bsModalClose,
+        DataTableRow.events.bsOffcanvasClose
     ];
 
     constructor() {
         super();
         this.isOpen = false;
+        this.item = null;
     }
 
     connectedCallback() {
@@ -33,51 +34,84 @@ export class DataTableRow extends CustomElementBase {
             this.isOpen = false;
         });
     }
+    
+    disconnectedCallback() {
+        this.dataTable.removeEventListener(DataTableRow.events.bsModalClose, () =>{
+            this.isOpen = false;
+        });
+        this.dataTable.removeEventListener(DataTableRow.events.bsOffcanvasClose, () =>{
+            this.isOpen = false;
+        });
+    }
 
     eventHandlers = {
         [TableConfig.events.rowAction]: (objEvent) => {
-            if(objEvent.detail.method === 'DELETE' && !confirm('Are you sure you want to delete this item?')){
+            if(objEvent.detail.method.toLocaleLowerCase() === 'delete' && !confirm('Are you sure you want to delete this item?')){
                 return;
             }
-            this.handleRowAction(objEvent);
+
+            const isSameTarget = this.item?.rowId === objEvent.detail.rowId
+                && this.item?.presentation === objEvent.detail.presentation;
+
+            if (!isSameTarget && this.isOpen) {
+                this.hideElement({ detail: this.item });
+                this.isOpen = false;
+            }
+            
+            this.item = objEvent.detail;
+            
+            if (!this.isOpen) {
+                this.handleRowAction(objEvent);
+            } else if (isSameTarget) {
+                this.hideElement(objEvent);
+                this.isOpen = false;
+            }
         }
     };
     
-    
-    async handleRowAction(objEvent){
-        if(this.isOpen){
-            switch (objEvent.detail.mode) {
-                case 'inline':
-                    this.triggerCustomEvent(TableConfig.events.hideCollapse, { rowId: objEvent.detail.rowId });
-                    break;
-                case 'modal':
-                    this.triggerCustomEvent(TableConfig.events.hideModal, { rowId: objEvent.detail.rowId });
-                    break;
-                case 'offcanvas':
-                    this.triggerCustomEvent(TableConfig.events.hideOffcanvas, { rowId: objEvent.detail.rowId });
-                    break;
-            }
-        } else{
-            this.dataTable.setAttribute('loading', 'true');
-            const data = await fetch(`https://my-json-server.typicode.com/MrLesion/data-table${objEvent.detail.endpoint}/${objEvent.detail.rowId}`, {
-                method: objEvent.detail.method,
-                body: objEvent.detail.method === 'POST' ? new FormData(this.dataTable.form) : null 
-            }).then(response => response.json());
-            
-            switch (objEvent.detail.mode) {
-                case 'inline':
-                    this.triggerCustomEvent(TableConfig.events.showCollapse, { rowId: objEvent.detail.rowId, html: data.html });
-                    break;
-                case 'modal':
-                    this.triggerCustomEvent(TableConfig.events.showModal, { rowId: objEvent.detail.rowId, html: data.html });
-                    break;
-                case 'offcanvas':
-                    this.triggerCustomEvent(TableConfig.events.showOffcanvas, { rowId: objEvent.detail.rowId, html: data.html });
-                    break;
-            }
-            this.dataTable.setAttribute('loading', 'false');
+    hideElement(objEvent){
+        switch (objEvent.detail.presentation) {
+            case 'inline':
+                this.triggerCustomEvent(TableConfig.events.hideCollapse, { rowId: objEvent.detail.rowId });
+                break;
+            case 'modal':
+                this.triggerCustomEvent(TableConfig.events.hideModal, { rowId: objEvent.detail.rowId });
+                break;
+            case 'offcanvas':
+                this.triggerCustomEvent(TableConfig.events.hideOffcanvas, { rowId: objEvent.detail.rowId });
+                break;
         }
-        this.isOpen = !this.isOpen;
+    }
+    
+    showElement(objEvent, data){
+        switch (objEvent.detail.presentation) {
+            case 'inline':
+                this.triggerCustomEvent(TableConfig.events.showCollapse, { rowId: objEvent.detail.rowId, html: data.html });
+                break;
+            case 'modal':
+                this.triggerCustomEvent(TableConfig.events.showModal, { rowId: objEvent.detail.rowId, html: data.html });
+                break;
+            case 'offcanvas':
+                this.triggerCustomEvent(TableConfig.events.showOffcanvas, { rowId: objEvent.detail.rowId, html: data.html });
+                break;
+        }
+    }
+
+
+    async handleRowAction(objEvent) {
+        this.dataTable.setAttribute('loading', 'true');
+
+        const data = await fetch(
+            `https://my-json-server.typicode.com/MrLesion/data-table${objEvent.detail.endpoint}/${objEvent.detail.rowId}`,
+            {
+                method: objEvent.detail.method,
+                body: objEvent.detail.method.toLocaleLowerCase() === 'post' ? new FormData(this.dataTable.form) : null,
+            }
+        ).then(response => response.json());
+
+        this.showElement(objEvent, data);
+        this.dataTable.setAttribute('loading', 'false');
+        this.isOpen = true;
     }
 }
 
